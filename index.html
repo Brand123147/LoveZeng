@@ -18,17 +18,20 @@
     <body>
         <audio autoplay="autoplay" loop="loop" preload="auto" controls="controls" loop = "loop"
         src="./Love_files/梦中的婚礼.mp3"> </audio>
+        <div id="input-container" style="position: fixed; top: 20px; right: 20px; z-index: 1000; background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <input type="text" id="custom-text" placeholder="输入自定义文字" style="padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 200px; font-size: 14px;">
+            <button id="confirm-btn" style="padding: 8px 20px; background: #be1a25; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin-left: 10px;">确认</button>
+        </div>
         <div id="main">
             <div id="error">亲，您使用的浏览器无法支持即将显示的内容，请换成谷歌(<a href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a>)或者火狐(<a href="http://firefox.com.cn/download/">Firefox</a>)浏览器哟~</div>
             <div id="wrap">
                <div id="text">
                     <div id="code">                 
                     <span class="say">
-                            
                             我喜欢你
-</span><br>
-                   <br>
-                    <span class="say"><span class="space"></span> -- Yours, Brand.</span>
+                    </span><br>
+                    <br>
+                    <span class="say"><span class="space"></span> </span>
                     </div>
                 </div>
                 <div id="clock-box">
@@ -40,6 +43,27 @@
         </div>
     
     <script>
+    $(document).ready(function() {
+        var savedText = localStorage.getItem('customLoveText');
+        if (savedText && savedText.trim() !== '') {
+            $('#custom-text').val(savedText);
+            $('#code .say:first').html(savedText);
+        }
+        
+        $('#confirm-btn').click(function() {
+            var customText = $('#custom-text').val();
+            if (customText.trim() !== '') {
+                $('#code .say:first').html(customText);
+                localStorage.setItem('customLoveText', customText);
+            }
+        });
+        
+        $('#custom-text').keypress(function(e) {
+            if (e.which === 13) {
+                $('#confirm-btn').click();
+            }
+        });
+    });
     </script>
 
     <script>
@@ -173,11 +197,11 @@
 
         var textAnimate = eval(Jscex.compile("async", function () {
             var together = new Date();
-            together.setFullYear(2026, 02, 31);
+            together.setFullYear(2026, 2, 31);
             together.setHours(16);
             together.setMinutes(33);
-            together.setSeconds(01);
-            together.setMilliseconds(01);
+            together.setSeconds(1);
+            together.setMilliseconds(1);
 
             $("#code").show().typewriter();
             $("#clock-box").fadeIn(500);
